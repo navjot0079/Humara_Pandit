@@ -23,8 +23,16 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/catalog" element={<Catalog />} />
-                <Route path="/recommend" element={<RecommendForm />} />
-                <Route path="/recommend/result" element={<RecommendResult />} />
+                <Route path="/recommend" element={
+                  <ProtectedRoute>
+                    <RecommendForm />
+                  </ProtectedRoute>
+                } />
+                <Route path="/recommend/result" element={
+                  <ProtectedRoute>
+                    <RecommendResult />
+                  </ProtectedRoute>
+                } />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route
