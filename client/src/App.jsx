@@ -22,7 +22,11 @@ function App() {
             <main className="flex-1">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/catalog" element={<Catalog />} />
+                <Route path="/catalog" element={
+                  <ProtectedRoute>
+                    <Catalog />
+                  </ProtectedRoute>
+                } />
                 <Route path="/recommend" element={
                   <ProtectedRoute>
                     <RecommendForm />
