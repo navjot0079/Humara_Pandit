@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { IoDiamond } from 'react-icons/io5';
-import { FaGithub, FaHeart } from 'react-icons/fa';
+import { FaHeart, FaHome, FaGem, FaStar } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
 
 const Footer = () => {
@@ -10,8 +10,8 @@ const Footer = () => {
     <footer
       className={`relative py-12 mt-auto ${
         darkMode
-          ? 'bg-gem-950/60 border-t border-white/5'
-          : 'bg-white/60 border-t border-gem-100'
+          ? 'bg-gem-950/80 backdrop-blur-xl border-t border-white/5'
+          : 'bg-white/80 backdrop-blur-xl border-t border-gem-200/30'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,19 +53,20 @@ const Footer = () => {
             </h3>
             <div className="space-y-2">
               {[
-                { name: 'Home', path: '/' },
-                { name: 'Gemstone Catalog', path: '/catalog' },
-                { name: 'Get Recommendation', path: '/recommend' },
+                { name: 'Home', path: '/', icon: <FaHome className="text-xs" /> },
+                { name: 'Gemstone Catalog', path: '/catalog', icon: <FaGem className="text-xs" /> },
+                { name: 'Get Recommendation', path: '/recommend', icon: <FaStar className="text-xs" /> },
               ].map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`block text-sm transition-colors ${
+                  className={`flex items-center gap-2 text-sm transition-colors ${
                     darkMode
                       ? 'text-gray-400 hover:text-gem-300'
                       : 'text-gray-500 hover:text-gem-600'
                   }`}
                 >
+                  {link.icon}
                   {link.name}
                 </Link>
               ))}
