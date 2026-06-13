@@ -32,19 +32,27 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const res = await api.post('/auth/login', { email, password });
-    const { token: newToken, ...userData } = res.data;
+    const { token: newToken } = res.data;
     setToken(newToken);
-    setUser(userData);
     localStorage.setItem('gemstone-token', newToken);
+    // Fetch full user profile with favorites & history populated
+    const profile = await api.get('/auth/me', {
+      headers: { Authorization: `Bearer ${newToken}` },
+    });
+    setUser(profile.data);
     return res.data;
   };
 
   const register = async (name, email, password) => {
     const res = await api.post('/auth/register', { name, email, password });
-    const { token: newToken, ...userData } = res.data;
+    const { token: newToken } = res.data;
     setToken(newToken);
-    setUser(userData);
     localStorage.setItem('gemstone-token', newToken);
+    // Fetch full user profile with favorites & history populated
+    const profile = await api.get('/auth/me', {
+      headers: { Authorization: `Bearer ${newToken}` },
+    });
+    setUser(profile.data);
     return res.data;
   };
 
@@ -56,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, token, loading, login, register, logout, isAuthenticated: !!user }}
+      value={{ user, token, loading, login, register, logout, refreshUser: fetchUser, isAuthenticated: !!user }}
     >
       {children}
     </AuthContext.Provider>

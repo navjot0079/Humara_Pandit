@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 const RecommendResult = () => {
   const { darkMode } = useTheme();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, refreshUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [saving, setSaving] = useState(false);
@@ -48,6 +48,7 @@ const RecommendResult = () => {
     try {
       await favoritesAPI.add(gemstoneId);
       setSaved((prev) => ({ ...prev, [gemstoneId]: true }));
+      refreshUser();
     } catch (err) {
       console.error('Failed to save:', err);
     } finally {

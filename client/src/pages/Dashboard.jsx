@@ -14,13 +14,14 @@ const tabs = [
 
 const Dashboard = () => {
   const { darkMode } = useTheme();
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
   const [favorites, setFavorites] = useState([]);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (activeTab === 'profile') refreshUser();
     if (activeTab === 'favorites') fetchFavorites();
     if (activeTab === 'history') fetchHistory();
   }, [activeTab]);
@@ -53,6 +54,7 @@ const Dashboard = () => {
     try {
       await favoritesAPI.remove(gemstoneId);
       setFavorites((prev) => prev.filter((g) => g._id !== gemstoneId));
+      refreshUser();
     } catch (error) {
       console.error('Error removing favorite:', error);
     }
