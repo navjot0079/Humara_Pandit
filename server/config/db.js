@@ -358,7 +358,7 @@ const connectDB = async () => {
       const created = await Gemstone.insertMany(gemstones);
       console.log(`Auto-seeded ${created.length} gemstones successfully!`);
     } else {
-      console.log(`Database already has ${count} gemstones. Skipping seed.`);
+      console.log(`Database has ${count} gemstones.`);
     }
   } catch (error) {
     console.error(`Error: ${error.message}`);
